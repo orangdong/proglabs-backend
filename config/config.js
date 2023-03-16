@@ -6,6 +6,7 @@ dotenvExpand.expand(myEnv);
 
 const port = process.env.PORT || 5000;
 const host = process.env.HOST || "0.0.0.0";
+const appKey = process.env.APP_KEY || "";
 
 const mainDbConn = {
   url: `${process.env.DB_URL}`,
@@ -15,4 +16,5 @@ export default {
   port,
   host,
   mainDbConn,
+  appKey,
 };
