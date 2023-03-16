@@ -19,8 +19,6 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.use("/files", express.static("files"));
-
 app.use("/v1", routes.v1);
 
 app.use((req, res, next) => {
