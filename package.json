@@ -1,0 +1,39 @@
+{
+  "name": "proglabs-backend",
+  "version": "1.0.0",
+  "description": "Proglabs is an e-learning platform using NFT based membership",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "express",
+    "REST API",
+    "NodeJS"
+  ],
+  "author": "Aviel Naftali (orangdong@github)",
+  "prisma": {
+    "schema": "db/main/schema.prisma",
+    "seed": "node db/main/seed.js"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orangdong/proglabs-backend.git"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "dotenv-expand": "^10.0.0",
+    "express": "^4.18.2",
+    "http-errors": "^2.0.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21",
+    "prisma": "^4.11.0"
+  }
+}
