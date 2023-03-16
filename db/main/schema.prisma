@@ -11,37 +11,75 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id              Int              @id @default(autoincrement())
+  walletAddress   String?
+  name            String?
+  UserCourses     UserCourse[]
+  FinishedLessons FinishedLesson[]
 
   @@map("users")
 }
 
 model Course {
-  id Int @id @default(autoincrement())
+  id                 Int                @id @default(autoincrement())
+  title              String
+  isPremium          Boolean            @default(false)
+  thumbnail          String             @db.Text
+  certificate        String?            @db.Text
+  courseModules      CourseModule[]
+  CourseTechnologies CourseTechnology[]
+  UserCourses        UserCourse[]
 
   @@map("courses")
 }
 
 model CourseModule {
-  id Int @id @default(autoincrement())
+  id            Int            @id @default(autoincrement())
+  courseId      Int
+  course        Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title         String
+  courseLessons CourseLesson[]
 
   @@map("course_modules")
 }
 
 model CourseLesson {
-  id Int @id @default(autoincrement())
+  id              Int              @id @default(autoincrement())
+  courseModuleId  Int
+  courseModule    CourseModule     @relation(fields: [courseModuleId], references: [id], onDelete: Cascade)
+  content         String           @db.LongText
+  FinishedLessons FinishedLesson[]
 
   @@map("course_lessons")
 }
 
+model CourseTechnology {
+  id       Int    @id @default(autoincrement())
+  courseId Int
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  tech     String
+  img      String @db.Text
+
+  @@map("course_technologies")
+}
+
 model UserCourse {
-  id Int @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
+  userId     Int
+  courseId   Int
+  user       User    @relation(fields: [userId], references: [id])
+  course     Course  @relation(fields: [courseId], references: [id])
+  isComplete Boolean @default(false)
 
   @@map("user_courses")
 }
 
 model FinishedLesson {
-  id Int @id @default(autoincrement())
+  id       Int          @id @default(autoincrement())
+  userId   Int
+  lessonId Int
+  user     User         @relation(fields: [userId], references: [id])
+  lesson   CourseLesson @relation(fields: [lessonId], references: [id])
 
   @@map("finished_lessons")
 }
