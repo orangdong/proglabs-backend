@@ -15,8 +15,8 @@ model User {
   id              Int              @id @default(autoincrement())
   walletAddress   String?
   name            String?
-  UserCourses     UserCourse[]
-  FinishedLessons FinishedLesson[]
+  userCourses     UserCourse[]
+  finishedLessons FinishedLesson[]
 
   @@map("users")
 }
@@ -28,8 +28,8 @@ model Course {
   thumbnail          String             @db.Text
   certificate        String?            @db.Text
   courseModules      CourseModule[]
-  CourseTechnologies CourseTechnology[]
-  UserCourses        UserCourse[]
+  courseTechnologies CourseTechnology[]
+  userCourses        UserCourse[]
 
   @@map("courses")
 }
@@ -49,7 +49,7 @@ model CourseLesson {
   courseModuleId  Int
   courseModule    CourseModule     @relation(fields: [courseModuleId], references: [id], onDelete: Cascade)
   content         String           @db.LongText
-  FinishedLessons FinishedLesson[]
+  finishedLessons FinishedLesson[]
 
   @@map("course_lessons")
 }
