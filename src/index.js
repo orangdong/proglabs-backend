@@ -15,7 +15,7 @@ app.use(cors());
 app.get("/", async (req, res) => {
   res.send({
     status: "success",
-    message: "Proglabs backend OK",
+    message: `Proglabs backend OK, ${config.mainDbConn.url}`,
   });
 });
 
