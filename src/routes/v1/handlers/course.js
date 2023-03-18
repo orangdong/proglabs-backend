@@ -6,7 +6,16 @@ const index = async (req, res, next) => {
   try {
     const { type, limit } = req.query;
 
-    const prismaOptions = {};
+    const prismaOptions = {
+      include: {
+        courseTechnologies: true,
+        _count: {
+          select: {
+            courseModules: true,
+          },
+        },
+      },
+    };
 
     if (limit) {
       if (limit < 0) {
