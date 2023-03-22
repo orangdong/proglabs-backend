@@ -27,6 +27,7 @@ model Course {
   isPremium          Boolean            @default(false)
   thumbnail          String             @db.Text
   certificate        String?            @db.Text
+  description        String?            @db.LongText
   courseModules      CourseModule[]
   courseTechnologies CourseTechnology[]
   userCourses        UserCourse[]
