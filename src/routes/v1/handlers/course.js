@@ -49,6 +49,35 @@ const index = async (req, res, next) => {
     next(e);
   }
 };
+
+const getCourseById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const course = await main.course.findUnique({
+      where: {
+        id: parseInt(id, 10),
+      },
+      include: {
+        courseModules: true,
+        courseTechnologies: true,
+        _count: {
+          select: {
+            userCourses: true,
+          },
+        },
+      },
+    });
+
+    return res.json({
+      status: "success",
+      message: "Courses fetched successfully",
+      data: course,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 export default {
   index,
+  getCourseById,
 };

@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.use(checkKey);
 router.get("/courses/", course.index);
+router.get("/courses/:id", course.getCourseById);
 
 export default router;
