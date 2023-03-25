@@ -49,7 +49,8 @@ model CourseLesson {
   id              Int              @id @default(autoincrement())
   courseModuleId  Int
   courseModule    CourseModule     @relation(fields: [courseModuleId], references: [id], onDelete: Cascade)
-  content         String           @db.LongText
+  title           String
+  content         String?          @db.LongText
   finishedLessons FinishedLesson[]
 
   @@map("course_lessons")

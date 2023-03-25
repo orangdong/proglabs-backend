@@ -58,7 +58,17 @@ const getCourseById = async (req, res, next) => {
         id: parseInt(id, 10),
       },
       include: {
-        courseModules: true,
+        courseModules: {
+          select: {
+            id: true,
+            title: true,
+            _count: {
+              select: {
+                courseLessons: true,
+              },
+            },
+          },
+        },
         courseTechnologies: true,
         _count: {
           select: {
