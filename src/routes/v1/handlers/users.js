@@ -1,4 +1,6 @@
 import db from "../../../../db/db.js";
+import jwt from "jsonwebtoken";
+import config from "../../../../config/config.js";
 
 const { main } = db;
 
@@ -79,8 +81,43 @@ const updateUser = async (req, res, next) => {
   }
 };
 
+const login = async (req, res, next) => {
+  try {
+    const { publicKey } = req.body;
+
+    const user = await main.user.findFirst({
+      where: {
+        walletAddress: publicKey,
+      },
+    });
+
+    const data = {
+      name: user.name,
+      publicKey,
+    };
+    // hour * minutes
+    const expiry = 3 * 60;
+    const currTime = new Date().getTime();
+    const accTokenExp = new Date(currTime + expiry * 60 * 1000);
+    const token = jwt.sign(data, config.jwtSecret, { expiresIn: `${expiry}m` });
+
+    return res.json({
+      status: "success",
+      message: "login success",
+      data: {
+        accessToken: token,
+        accessTokenExpiry: accTokenExp,
+        user: data,
+      },
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 export default {
   createUser,
   getUserByAddress,
   updateUser,
+  login,
 };
