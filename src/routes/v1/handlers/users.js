@@ -92,10 +92,12 @@ const login = async (req, res, next) => {
     });
 
     const data = {
+      id: user.id,
       name: user.name,
       publicKey,
     };
-    // hour * minutes
+
+    // hours * minutes
     const expiry = 3 * 60;
     const currTime = new Date().getTime();
     const accTokenExp = new Date(currTime + expiry * 60 * 1000);

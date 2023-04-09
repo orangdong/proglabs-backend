@@ -19,6 +19,7 @@ export default (req, res, next) => {
       message: "invalid token",
     });
   }
+
   req.user = validate;
 
   next();

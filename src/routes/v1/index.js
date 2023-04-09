@@ -10,6 +10,8 @@ const router = express.Router();
 router.use(checkKey);
 router.get("/courses/", course.index);
 router.get("/courses/:id", course.getCourseById);
+router.put("/courses/:id/enroll", checkToken, course.enrollCourse);
+router.get("/courses/:id/enroll", checkToken, course.checkEnroll);
 
 router.post("/users", users.createUser);
 router.get("/users/:address", users.getUserByAddress);
