@@ -16,6 +16,8 @@ router.get("/courses/:id/enroll", checkToken, course.checkEnroll);
 router.post("/users", users.createUser);
 router.get("/users/:address", users.getUserByAddress);
 router.put("/users/:address", users.updateUser);
+router.put("/me", checkToken, users.updateCurrentUser);
+router.get("/me", checkToken, users.getCurrentUser);
 
 router.post("/login", checkSignature, users.login);
 

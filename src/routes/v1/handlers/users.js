@@ -21,10 +21,13 @@ const createUser = async (req, res, next) => {
       });
     }
 
+    const userName = name || address;
+
     const user = await main.user.create({
       data: {
         walletAddress: address,
-        name: name || address,
+        name: userName,
+        avatar: `https://ui-avatars.com/api/?name=${userName}&color=656F78&background=F6F6F6`,
       },
     });
 
@@ -81,6 +84,58 @@ const updateUser = async (req, res, next) => {
   }
 };
 
+const updateCurrentUser = async (req, res, next) => {
+  try {
+    const { name, email } = req.body;
+    const user = req.user;
+
+    const update = await main.user.update({
+      where: {
+        id: parseInt(user.id, 10),
+      },
+      data: {
+        name,
+        email,
+      },
+    });
+
+    return res.json({
+      status: "success",
+      message: "User updated",
+      data: update,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const getCurrentUser = async (req, res, next) => {
+  try {
+    const user = req.user;
+
+    const currUser = await main.user.findUnique({
+      where: {
+        id: parseInt(user.id, 10),
+      },
+    });
+
+    if (!currUser) {
+      return res.status(404).json({
+        status: "error",
+        message: "user not found",
+      });
+    }
+
+    return res.json({
+      status: "success",
+      message: "User fetched",
+      data: currUser,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const login = async (req, res, next) => {
   try {
     const { publicKey } = req.body;
@@ -95,6 +150,8 @@ const login = async (req, res, next) => {
       id: user.id,
       name: user.name,
       publicKey,
+      email: user.email,
+      avatar: user.avatar,
     };
 
     // hours * minutes
@@ -122,4 +179,6 @@ export default {
   getUserByAddress,
   updateUser,
   login,
+  updateCurrentUser,
+  getCurrentUser,
 };
