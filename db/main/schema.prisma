@@ -11,6 +11,13 @@ datasource db {
   relationMode = "prisma"
 }
 
+model Nft {
+  id          Int    @id @default(autoincrement())
+  mintAddress String
+
+  @@map("nfts")
+}
+
 model User {
   id              Int              @id @default(autoincrement())
   walletAddress   String?          @unique
