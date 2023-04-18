@@ -145,6 +145,7 @@ const checkEnroll = async (req, res, next) => {
     next(e);
   }
 };
+
 export default {
   index,
   getCourseById,

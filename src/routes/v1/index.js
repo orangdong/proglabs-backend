@@ -4,6 +4,7 @@ import checkKey from "./middlewares/checkKey.js";
 import checkSignature from "./middlewares/checkSignature.js";
 import checkToken from "./middlewares/checkToken.js";
 import users from "./handlers/users.js";
+import membership from "./handlers/membership.js";
 
 const router = express.Router();
 
@@ -18,6 +19,10 @@ router.get("/users/:address", users.getUserByAddress);
 router.put("/users/:address", users.updateUser);
 router.put("/me", checkToken, users.updateCurrentUser);
 router.get("/me", checkToken, users.getCurrentUser);
+
+router.get("/membership", membership.index);
+router.post("/membership", membership.createNewNft);
+router.get("/membership/mint-data", membership.mintData);
 
 router.post("/login", checkSignature, users.login);
 
