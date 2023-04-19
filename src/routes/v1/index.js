@@ -20,8 +20,8 @@ router.put("/users/:address", users.updateUser);
 router.put("/me", checkToken, users.updateCurrentUser);
 router.get("/me", checkToken, users.getCurrentUser);
 
-router.get("/membership", membership.index);
-router.post("/membership", membership.createNewNft);
+router.get("/membership", checkToken, membership.index);
+router.post("/membership", checkToken, membership.createNewNft);
 router.get("/membership/mint-data", membership.mintData);
 
 router.post("/login", checkSignature, users.login);
