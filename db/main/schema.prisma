@@ -76,12 +76,13 @@ model CourseTechnology {
 }
 
 model UserCourse {
-  id         Int     @id @default(autoincrement())
-  userId     Int
-  courseId   Int
-  user       User    @relation(fields: [userId], references: [id])
-  course     Course  @relation(fields: [courseId], references: [id])
-  isComplete Boolean @default(false)
+  id          Int     @id @default(autoincrement())
+  userId      Int
+  courseId    Int
+  user        User    @relation(fields: [userId], references: [id])
+  course      Course  @relation(fields: [courseId], references: [id])
+  isComplete  Boolean @default(false)
+  completedAt String?
 
   @@map("user_courses")
 }

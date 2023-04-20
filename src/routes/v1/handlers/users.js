@@ -136,6 +136,29 @@ const getCurrentUser = async (req, res, next) => {
   }
 };
 
+const getCourses = async (req, res, next) => {
+  try {
+    const user = req.user;
+
+    const courses = await main.userCourse.findMany({
+      where: {
+        userId: parseInt(user.id, 10),
+      },
+      include: {
+        course: true,
+      },
+    });
+
+    return res.json({
+      status: "success",
+      message: "User courses fetched",
+      data: courses,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const login = async (req, res, next) => {
   try {
     const { publicKey } = req.body;
@@ -181,4 +204,5 @@ export default {
   login,
   updateCurrentUser,
   getCurrentUser,
+  getCourses,
 };

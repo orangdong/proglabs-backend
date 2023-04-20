@@ -19,6 +19,7 @@ router.get("/users/:address", users.getUserByAddress);
 router.put("/users/:address", users.updateUser);
 router.put("/me", checkToken, users.updateCurrentUser);
 router.get("/me", checkToken, users.getCurrentUser);
+router.get("/me/courses", checkToken, users.getCourses);
 
 router.get("/membership", checkToken, membership.index);
 router.post("/membership", checkToken, membership.createNewNft);
