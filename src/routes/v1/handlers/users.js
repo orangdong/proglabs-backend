@@ -117,6 +117,13 @@ const getCurrentUser = async (req, res, next) => {
       where: {
         id: parseInt(user.id, 10),
       },
+      include: {
+        userCourses: {
+          include: {
+            course: true,
+          },
+        },
+      },
     });
 
     if (!currUser) {
