@@ -146,15 +146,48 @@ const getCurrentUser = async (req, res, next) => {
 const getCourses = async (req, res, next) => {
   try {
     const user = req.user;
+    const includeModules = req.query.includeModules === "true";
 
     const courses = await main.userCourse.findMany({
       where: {
         userId: parseInt(user.id, 10),
       },
       include: {
-        course: true,
+        course: {
+          include: {
+            courseModules: {
+              include: {
+                courseLessons: true,
+              },
+            },
+          },
+        },
       },
     });
+
+    if (includeModules) {
+      const finishedLesson = await main.finishedLesson.findMany({
+        where: {
+          userId: parseInt(user.id, 10),
+        },
+      });
+
+      courses.forEach((c) => {
+        c.course.courseModules.forEach((cm) => {
+          let counter = 0;
+          cm.courseLessons.forEach((cl) => {
+            const isFinished = finishedLesson.find(
+              (fl) => fl.lessonId === cl.id
+            );
+            if (isFinished) {
+              counter++;
+            }
+          });
+
+          cm.lessonFinished = counter;
+        });
+      });
+    }
 
     return res.json({
       status: "success",
