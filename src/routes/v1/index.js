@@ -13,6 +13,7 @@ router.get("/courses/", course.index);
 router.get("/courses/:id", course.getCourseById);
 router.put("/courses/:id/enroll", checkToken, course.enrollCourse);
 router.get("/courses/:id/enroll", checkToken, course.checkEnroll);
+router.put("/courses/lesson", checkToken, course.updateLesson);
 
 router.post("/users", users.createUser);
 router.get("/users/:address", users.getUserByAddress);
@@ -20,6 +21,7 @@ router.put("/users/:address", users.updateUser);
 router.put("/me", checkToken, users.updateCurrentUser);
 router.get("/me", checkToken, users.getCurrentUser);
 router.get("/me/courses", checkToken, users.getCourses);
+router.get("/me/my-course/:id", checkToken, course.getMyCourseDetail);
 
 router.get("/membership", checkToken, membership.index);
 router.post("/membership", checkToken, membership.createNewNft);
