@@ -5,6 +5,7 @@ import checkSignature from "./middlewares/checkSignature.js";
 import checkToken from "./middlewares/checkToken.js";
 import users from "./handlers/users.js";
 import membership from "./handlers/membership.js";
+import filterFile from "./middlewares/filterFile.js";
 
 const router = express.Router();
 
@@ -18,7 +19,12 @@ router.put("/courses/lesson", checkToken, course.updateLesson);
 router.post("/users", users.createUser);
 router.get("/users/:address", users.getUserByAddress);
 router.put("/users/:address", users.updateUser);
-router.put("/me", checkToken, users.updateCurrentUser);
+router.put(
+  "/me",
+  checkToken,
+  filterFile.single("avatar"),
+  users.updateCurrentUser
+);
 router.get("/me", checkToken, users.getCurrentUser);
 router.get("/me/courses", checkToken, users.getCourses);
 router.get("/me/my-course/:id", checkToken, course.getMyCourseDetail);

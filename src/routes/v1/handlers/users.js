@@ -1,6 +1,7 @@
 import db from "../../../../db/db.js";
 import jwt from "jsonwebtoken";
 import config from "../../../../config/config.js";
+import storageUpload from "../helpers/storageUpload.js";
 
 const { main } = db;
 
@@ -88,15 +89,21 @@ const updateCurrentUser = async (req, res, next) => {
   try {
     const { name, email } = req.body;
     const user = req.user;
+    const data = {
+      name,
+      email,
+    };
+
+    if (req.file) {
+      const imageUrl = await storageUpload(req.file);
+      data.avatar = imageUrl;
+    }
 
     const update = await main.user.update({
       where: {
         id: parseInt(user.id, 10),
       },
-      data: {
-        name,
-        email,
-      },
+      data,
     });
 
     return res.json({
