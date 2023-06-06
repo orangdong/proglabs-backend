@@ -11,6 +11,7 @@ const jwtSecret = process.env.JWT_SECRET || null;
 const solanaNetwork = process.env.SOLANA_NETWORK || "devnet";
 const solanaKeypair = process.env.SOLANA_KEYPAIR || null;
 const candyMachineId = process.env.CANDY_MACHINE_ID || null;
+const bucket = process.env.GCLOUD_STORAGE_BUCKET || "";
 
 const mainDbConn = {
   url: `${process.env.DB_URL}`,
@@ -25,4 +26,5 @@ export default {
   solanaNetwork,
   solanaKeypair,
   candyMachineId,
+  bucket,
 };
